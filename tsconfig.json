@@ -1,19 +1,15 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "module": "commonjs",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "jsx": "react",
+    "outDir": "./build/ts",
+    "allowJs": false,
+    "module": "ESNext",
+    "moduleResolution": "node",
     "sourceMap": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "lib": ["es2015", "dom"]
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "jsx": "react",
+    "skipLibCheck": true,
+    "target": "es2015"
   },
-  "compileOnSave": false,
-  "buildOnSave": false,
-  "awesomeTypescriptLoaderOptions": {
-    "forkChecker": true,
-    "useWebpackText": true
-  }
+  "exclude": ["node_modules"]
 }
