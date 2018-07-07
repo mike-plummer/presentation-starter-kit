@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import * as React from "react";
 
 import "prismjs";
 import "reveal.js/css/reveal.css";
@@ -6,8 +6,18 @@ import "@objectpartners/revealjs-theme";
 
 import "./slide-deck.css";
 
-export class SlideDeck extends Component {
-  componentDidMount() {
+type Slide =
+  | string
+  | {
+      default: React.ComponentType;
+    };
+
+interface SlideDeckProps {
+  slides: Slide[][];
+}
+
+export class SlideDeck extends React.Component<SlideDeckProps> {
+  componentDidMount(): void {
     require.ensure(
       [
         "reveal.js",
@@ -21,7 +31,7 @@ export class SlideDeck extends Component {
         require("reveal.js/lib/js/head.min.js");
         require("reveal.js/lib/js/html5shiv.js");
 
-        window.Reveal = Reveal;
+        window["Reveal"] = Reveal;
 
         Reveal.initialize({
           history: true,
@@ -45,19 +55,19 @@ export class SlideDeck extends Component {
     );
   }
 
-  getSectionProps(html) {
-    const section = html.match(/<section[^>]+/);
+  private getSectionProps(slideHtml: string): object {
+    const section = slideHtml.match(/<section[^>]+/);
     if (!section) {
       return {};
     }
 
     const props = section
-      .pop()
+      .pop()!
       .replace(/<section\s/, "")
       .split(/([\w-]+)="([^"]+)"/)
       .filter(part => part && part.length > 0);
 
-    return props.reduce((merged, part, index) => {
+    return props.reduce((merged: object, part: any, index: number) => {
       if (part % 1 === 0) {
         merged[part] = "";
       } else if (props[index - 1]) {
@@ -67,47 +77,51 @@ export class SlideDeck extends Component {
     }, {});
   }
 
-  buildSlide(html, key, isTitle) {
-    if (html.default) {
-      const Slide = html.default;
+  private buildSlide(
+    slide: Slide,
+    key: string,
+    isTitle: boolean
+  ): React.ReactNode {
+    if (typeof slide === "string") {
       if (isTitle) {
-        return <Slide />;
+        return (
+          <div
+            key={key}
+            dangerouslySetInnerHTML={{ __html: slide }} // #yolo
+          />
+        );
       }
 
-      return (
-        <section key={key}>
-          <Slide />
-        </section>
-      );
-    }
+      const sectionProps = this.getSectionProps(slide);
 
-    if (isTitle) {
       return (
-        <div
+        <section
           key={key}
-          dangerouslySetInnerHTML={{ __html: html }} // #yolo
+          {...sectionProps}
+          dangerouslySetInnerHTML={{ __html: slide }} // #yolo
         />
       );
     }
 
-    const sectionProps = this.getSectionProps(html);
+    const Slide = slide.default;
+    if (isTitle) {
+      return <Slide />;
+    }
 
     return (
-      <section
-        key={key}
-        {...sectionProps}
-        dangerouslySetInnerHTML={{ __html: html }} // #yolo
-      />
+      <section key={key}>
+        <Slide />
+      </section>
     );
   }
 
-  render() {
+  render(): React.ReactNode {
     const { slides } = this.props;
     const { PRESENTATION_DATE: date } = process.env;
     return (
       <div className="reveal">
         <div className="slides">
-          {slides.map((deck, deckIndex) => {
+          {slides.map((deck: Slide[], deckIndex: number) => {
             const isTitleSlide =
               deckIndex === 0 || deckIndex === slides.length - 1;
             return (
@@ -115,7 +129,7 @@ export class SlideDeck extends Component {
                 key={deckIndex}
                 data-state={isTitleSlide ? "title" : undefined}
               >
-                {deck.map((html, slideIndex) => {
+                {deck.map((html: Slide, slideIndex: number) => {
                   const key = `${deckIndex}-${slideIndex}`;
                   return this.buildSlide(html, key, isTitleSlide);
                 })}
