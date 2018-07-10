@@ -1,0 +1,23 @@
+pre
+  code.lang-javascript
+    | function* counter() {
+    .fragment
+      |   let value = 0;
+      |   while (value < 3) {
+      |     yield value++;
+      |   }
+    .fragment
+      |   return -1;
+    | }
+
+pre.fragment
+  code.lang-javascript
+    | const myCounter = counter();
+    .fragment
+      | myCounter.next();   /* { value: 0, done: false } */
+      | myCounter.next();   /* { value: 1, done: false } */
+      | myCounter.next();   /* { value: 2, done: false } */
+    .fragment
+      | myCounter.next();   /* { value: -1, done: true } */
+    .fragment
+      | myCounter.next();   /* { value: undefined, done: true } */

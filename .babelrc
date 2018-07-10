@@ -7,7 +7,7 @@
   "plugins": [
     ["prismjs", {
       "languages": ["javascript", "json", "jsx", "typescript", "tsx"],
-      "plugins": ["normalize-whitespace", "keep-markup", "unescaped-markup"],
+      "plugins": ["normalize-whitespace", "keep-markup", "unescaped-markup", "line-numbers"],
       "theme": "okaidia",
       "css": true
     }]

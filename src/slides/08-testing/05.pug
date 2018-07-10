@@ -1,0 +1,15 @@
+pre
+  code.lang-javascript
+    | test('save saga - cancelled', () => {
+    |   return expectSaga(save, { value: 'blorg' })
+    .fragment
+      |     .put({ type: 'CONFIRM' })
+    .fragment
+      |     .take(['CANCELLED', 'CONFIRMED'])
+    .fragment
+      |     .dispatch({ type: 'CANCELLED' })
+    .fragment
+      |     .then(result => {
+      |       expect(result.effects).toBeEmpty();
+      |     });
+    | });

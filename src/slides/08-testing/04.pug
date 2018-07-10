@@ -1,0 +1,23 @@
+pre
+  code.lang-javascript
+    |
+    | test('save saga - confirmed & success', () => {
+    .fragment
+      |  return expectSaga(save, { value: 'blorg' })
+    .fragment
+      |    .provide(call(Api.save, 'blorg'), { result: 'success!'})
+    .fragment
+      |    .put({ type: 'CONFIRM' })
+    .fragment
+      |    .take(['CANCELLED', 'CONFIRMED'])
+    .fragment
+      |    .dispatch({ type: 'CONFIRMED' })
+    .fragment
+      |    .call(Api.save, 'blorg')
+    .fragment
+      |    .put({ type: 'SAVE_SUCCESS' })
+    .fragment
+      |    .then(result => {
+      |       expect(result.effects).toBeEmpty();
+      |     });
+  | });
