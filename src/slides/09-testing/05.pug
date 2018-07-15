@@ -1,15 +1,20 @@
 pre
   code.lang-javascript
     | test('save saga - cancelled', () => {
+    |   // Trigger Saga with mock action
     |   return expectSaga(save, { value: 'blorg' })
     .fragment
+      |     // Assert Saga dispatches CONFIRM action
       |     .put({ type: 'CONFIRM' })
     .fragment
+      |     // Assert Saga waits for expected actions
       |     .take(['CANCELLED', 'CONFIRMED'])
     .fragment
+      |     // Mock one of the waited-for actions so Saga can continue
       |     .dispatch({ type: 'CANCELLED' })
     .fragment
       |     .then(result => {
+      |       // Assert that the Saga didn't do anything else
       |       expect(result.effects).toBeEmpty();
       |     });
     | });

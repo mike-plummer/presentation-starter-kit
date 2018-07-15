@@ -3,21 +3,29 @@ pre
     |
     | test('save saga - confirmed & success', () => {
     .fragment
+      |  // Trigger Saga with mock action
       |  return expectSaga(save, { value: 'blorg' })
     .fragment
+      |    // Mock call to Api.save with 'blorg' param, provide return val
       |    .provide(call(Api.save, 'blorg'), { result: 'success!'})
     .fragment
+      |    // Assert Saga dispatches CONFIRM action
       |    .put({ type: 'CONFIRM' })
     .fragment
+      |    // Assert Saga waits for expected actions
       |    .take(['CANCELLED', 'CONFIRMED'])
     .fragment
+      |    // Mock one of the waited-for actions so Saga can continue
       |    .dispatch({ type: 'CONFIRMED' })
     .fragment
+      |    // Assert Saga calls Api.save with expected param
       |    .call(Api.save, 'blorg')
     .fragment
+      |    // Assert Saga dispatches SUCCESS action
       |    .put({ type: 'SAVE_SUCCESS' })
     .fragment
       |    .then(result => {
-      |       expect(result.effects).toBeEmpty();
-      |     });
+      |      // Assert that the Saga didn't do anything else
+      |      expect(result.effects).toBeEmpty();
+      |    });
   | });
