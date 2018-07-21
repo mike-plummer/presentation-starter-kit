@@ -3,8 +3,11 @@ pre
     | function* counter() {
     .fragment
       |   let value = 0;
+    .fragment
+      |   yield value;
+    .fragment
       |   while (value < 3) {
-      |     yield value++;
+      |     yield ++value;
       |   }
     .fragment
       |   return -1;
@@ -15,8 +18,12 @@ pre.fragment
     | const myCounter = counter();
     .fragment
       | myCounter.next();   /* { value: 0, done: false } */
+    .fragment
       | myCounter.next();   /* { value: 1, done: false } */
+    .fragment
       | myCounter.next();   /* { value: 2, done: false } */
+    .fragment
+      | myCounter.next();   /* { value: 3, done: false } */
     .fragment
       | myCounter.next();   /* { value: -1, done: true } */
     .fragment
