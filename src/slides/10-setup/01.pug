@@ -1,0 +1,30 @@
+pre
+  code.lang-javascript
+    | import { applyMiddleware, createStore } from 'redux';
+    | import createSagaMiddleware from 'redux-saga';
+    | import sagas from './sagas';
+    | import rootReducer from './reducers';
+    |
+    | const configureStore = () => {
+    .fragment
+      |   // Build Saga middleware
+      |   const sagaMiddleware = createSagaMiddleware();
+    .fragment
+      |   // Saga middleware can be combined with other middleware
+      |   const middleware = [sagaMiddleware];
+    .fragment
+      |   // Create store enhancers from middleware
+      |   const enhancers = applyMiddleware(...middleware);
+    .fragment
+      |   // Build your Redux store
+      |   const store = createStore(rootReducer, enhancers);
+    .fragment
+      |   // Kick off the Sagas - can be delayed if needed
+      |   // (wait until after app init, for example)
+      |   sagaMiddleware.run(sagas);
+    .fragment
+      |
+      |   return store;
+    | };
+    |
+    | export default configureStore();
