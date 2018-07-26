@@ -1,0 +1,8 @@
+h3 How are Sagas easier to test?
+
+p Important to bound what we really need to test
+
+ol
+  li.fragment Sagas are the result of their `effects`
+  li.fragment Your test needs to validate that the expected `effects` are generated
+  li.fragment The execution of those effects is redux-saga's job, so your test can skip that part

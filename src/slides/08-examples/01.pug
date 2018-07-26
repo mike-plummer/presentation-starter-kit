@@ -3,7 +3,7 @@ pre
     .fragment
       | function* sagaInvoker() {
       .fragment
-        |   // Every time a SAVE is seen kick off instance of 'save' Saga
+        |   // Every time a SAVE is seen fork off instance of 'save' Saga
         |   yield fork(takeEvery("SAVE", save));
       | }
     |
@@ -18,8 +18,8 @@ pre
           |
           .fragment
             |     // Wait for user to respond with CONFIRM or CANCEL
-            |     const response = take(["CANCELLED", "CONFIRMED"]);
-            |     if (response.type === "CANCELLED") {
+            |     const choice = yield take(["CANCELLED", "CONFIRMED"]);
+            |     if (choice.type === "CANCELLED") {
             |       return;
             |     }
             |
