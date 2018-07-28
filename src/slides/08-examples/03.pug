@@ -1,32 +1,22 @@
 pre
   code.lang-javascript
+    | function* watchers() {
     .fragment
-      | function* save(saveAction) {
-      .fragment
-        |   try {
-        .fragment
-          |     // Dispatch action for user to CONFIRM save
-          |     yield put({ type: "CONFIRM" });
-          |
-          |
-          .fragment
-            |     // Wait for user to respond with CONFIRM or CANCEL
-            |     const choice = yield take(["CANCELLED", "CONFIRMED"]);
-            |     if (choice.type === "CANCELLED") {
-            |       return;
-            |     }
-            |
-            |
-            .fragment
-              |     // Kick off API call to save
-              |     yield call(Api.save, action.value);
-              |
-              |
-              .fragment
-                |     // API call succeeded, dispatch SUCCESS action
-                |     yield put({ type: "SAVE_SUCCESS" });
-        |   } catch (error) {
-        |     // Any errors fall into here, dispatch FAILURE action
-        |     yield put({ type: "SAVE_FAILURE" });
-        |   }
-      | }
+      |   // Every time a SAVE is seen begin
+      |   // an instance of 'save' Saga
+      |   yield fork(takeEvery("SAVE", save));
+      |
+    .fragment
+      |   // Every time a REFRESH is seen begin
+      |   // an instance of the 'refresh' Saga
+      |   // Cancel any instances already running.
+      |   yield fork(takeLatest("REFRESH", refresh));
+    | }
+    |
+    | // Sagas
+    | function* save(saveAction) {
+    |   // Logic here
+    | }
+    | function* refresh(refreshAction) {
+    |   // Logic here
+    | }

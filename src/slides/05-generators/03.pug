@@ -2,12 +2,12 @@ pre
   code.lang-javascript
     | function* counter() {
     .fragment
-      |   let value = 0;
+      |   let count = 0;
     .fragment
-      |   yield value;
+      |   yield count;
     .fragment
-      |   while (value < 3) {
-      |     yield ++value;
+      |   while (count < 3) {
+      |     yield ++count;
       |   }
     .fragment
       |   return -1;
@@ -15,16 +15,16 @@ pre
 
 pre.fragment
   code.lang-javascript
-    | const myCounter = counter();
+    | const generator = counter();
     .fragment
-      | myCounter.next();   /* { value: 0, done: false } */
+      | generator.next();   /* { value: 0, done: false } */
     .fragment
-      | myCounter.next();   /* { value: 1, done: false } */
+      | generator.next();   /* { value: 1, done: false } */
     .fragment
-      | myCounter.next();   /* { value: 2, done: false } */
+      | generator.next();   /* { value: 2, done: false } */
     .fragment
-      | myCounter.next();   /* { value: 3, done: false } */
+      | generator.next();   /* { value: 3, done: false } */
     .fragment
-      | myCounter.next();   /* { value: -1, done: true } */
+      | generator.next();   /* { value: -1, done: true } */
     .fragment
-      | myCounter.next();   /* { value: undefined, done: true } */
+      | generator.next();   /* { value: undefined, done: true } */
