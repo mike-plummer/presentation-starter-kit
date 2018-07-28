@@ -1,26 +1,32 @@
-h2 Composition
-
-p What if multiple sagas have common logic?
-
-p Sagas can be composed to call one another
-
 pre
   code.lang-javascript
     .fragment
-      | function* commonSaga() {
-      |   // Common stuff happens here //
+      | function* save(saveAction) {
+      .fragment
+        |   try {
+        .fragment
+          |     // Dispatch action for user to CONFIRM save
+          |     yield put({ type: "CONFIRM" });
+          |
+          |
+          .fragment
+            |     // Wait for user to respond with CONFIRM or CANCEL
+            |     const choice = yield take(["CANCELLED", "CONFIRMED"]);
+            |     if (choice.type === "CANCELLED") {
+            |       return;
+            |     }
+            |
+            |
+            .fragment
+              |     // Kick off API call to save
+              |     yield call(Api.save, action.value);
+              |
+              |
+              .fragment
+                |     // API call succeeded, dispatch SUCCESS action
+                |     yield put({ type: "SAVE_SUCCESS" });
+        |   } catch (error) {
+        |     // Any errors fall into here, dispatch FAILURE action
+        |     yield put({ type: "SAVE_FAILURE" });
+        |   }
       | }
-    |
-    .fragment
-      | function* uniqueSaga1() {
-      |   // Another Saga can be executed via 'call'
-      |   yield call(commonSaga);
-      | }
-    |
-    .fragment
-      | function* uniqueSaga2() {
-      |   // Another Saga can also be directly
-      |   // invoked (not recommended)
-      |   yield* commonSaga();
-      | }
-    |

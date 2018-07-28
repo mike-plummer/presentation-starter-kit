@@ -1,16 +1,16 @@
-h3 A Saga is a Generator function
+h2 Examples of Effects
 
-p.fragment
-  | Each effect is a
-  code  yield
-  |  within the Generator
+pre.fragment
+  code.lang-javascript
+    | const currentReduxState = yield select();
 
-p.fragment
-  | The Generator runs each
-  code  yield
-  |  in turn, suspending for each
+pre.fragment
+  code.lang-javascript
+    | yield put({
+    |   type: 'SAVE',
+    |   value: valueToSave
+    | })
 
-p.fragment
-  | The Generator runs until it reaches the final
-  code  yield
-  |  , ending the Saga
+pre.fragment
+  code.lang-javascript
+    | const result = yield call(myFunction, 'arg1', 'arg2');

@@ -1,20 +1,10 @@
-h2 What is a Saga?
+h3 What does any of this have to do with Generators?
 
-p.fragment
-  | A
-  strong  set of interactions
-  |  that comprise a
-  strong  single logical flow
+h4.fragment A Saga is an ordered set of interactions (read, dispatch, call, etc)
+small.fragment  ...sounds like an iterator
 
-h4.fragment Sagas are:
+h4.fragment User & network interactions are async
+small.fragment ...maybe 'yield' can abstract that away?
 
-ul
-  li.fragment Triggered by stimulus (redux Action)
-
-h4.fragment and can:
-
-ul
-  li.fragment Use redux State
-  li.fragment Call functions
-  li.fragment Wait for additional Action(s)
-  li.fragment Generate Actions
+h4.fragment Duplicate stimuli should result in duplicate Sagas
+small.fragment ...we need multiple, independent iterator instances

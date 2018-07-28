@@ -1,37 +1,10 @@
-pre
-  code.lang-javascript
-    .fragment
-      | function* sagaInvoker() {
-      .fragment
-        |   // Every time a SAVE is seen fork off instance of 'save' Saga
-        |   yield fork(takeEvery("SAVE", save));
-      | }
-    |
-    |
-    .fragment
-      | function* save(saveAction) {
-      .fragment
-        |   try {
-        .fragment
-          |     // Dispatch action for user to CONFIRM save
-          |     yield put({ type: "CONFIRM" });
-          |
-          .fragment
-            |     // Wait for user to respond with CONFIRM or CANCEL
-            |     const choice = yield take(["CANCELLED", "CONFIRMED"]);
-            |     if (choice.type === "CANCELLED") {
-            |       return;
-            |     }
-            |
-            .fragment
-              |     // Kick off API call to save
-              |     yield call(Api.save, action.value);
-              .fragment
-                |     // API call succeeded, dispatch SUCCESS action
-                |     yield put({ type: "SAVE_SUCCESS" });
-        |   } catch (error) {
-        .fragment
-          |     // Any errors fall into here, dispatch FAILURE action
-          |     yield put({ type: "SAVE_FAILURE" });
-        |   }
-      | }
+h2 Saga Structure
+
+p There are lots of ways to structure Sagas, but I prefer to build them in two parts
+
+ol
+  li.fragment Watcher
+    small Watches for conditions we care about and invokes the appropriate Saga. These are initialized at app startup.
+
+  li.fragment Saga
+    small Invoked by a Watcher and are responsible for business logic. They are initialized on-demand.
