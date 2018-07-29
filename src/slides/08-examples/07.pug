@@ -1,0 +1,26 @@
+h2 Composition
+
+p What if multiple sagas have common logic?
+
+p Sagas can be composed to call one another
+
+pre
+  code.lang-javascript
+    .fragment
+      | function* confirm() {
+      |   // Basic confirmation flow //
+      | }
+    |
+    .fragment
+      | function* save() {
+      |   // Another Saga can be executed via 'call'
+      |   yield call(confirm);
+      | }
+    |
+    .fragment
+      | function* logout() {
+      |   // Another Saga can also be directly
+      |   // invoked using 'yield*' (not recommended)
+      |   yield* confirm();
+      | }
+    |

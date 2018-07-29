@@ -1,30 +1,24 @@
 pre
   code.lang-javascript
-    | function* counter() {
+    | function* counter(count) {
     .fragment
-      |   let count = 0;
-    .fragment
-      |   yield count;
-    .fragment
-      |   while (count < 3) {
-      |     yield ++count;
+      |   while (true) {
+      |     yield count++;
+      .fragment
+        |     if (count === 10) {
+        |       return 10;
+        |     }
       |   }
-    .fragment
-      |   return -1;
     | }
 
 pre.fragment
   code.lang-javascript
-    | const generator = counter();
+    | const generator = counter(8);
     .fragment
-      | generator.next();   /* { value: 0, done: false } */
+      | generator.next();   /* { value: 8, done: false } */
     .fragment
-      | generator.next();   /* { value: 1, done: false } */
+      | generator.next();   /* { value: 9, done: false } */
     .fragment
-      | generator.next();   /* { value: 2, done: false } */
-    .fragment
-      | generator.next();   /* { value: 3, done: false } */
-    .fragment
-      | generator.next();   /* { value: -1, done: true } */
+      | generator.next();   /* { value: 10, done: true } */
     .fragment
       | generator.next();   /* { value: undefined, done: true } */
