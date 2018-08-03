@@ -1,0 +1,18 @@
+h2 Effects
+
+p Helpers create 'effects'
+
+p An 'effect' is an object instructing redux-saga what to do
+
+pre.fragment
+  code.lang-javascript
+    | yield call(Api.fetch, './products');
+
+pre.fragment
+  code.lang-javascript
+    | {
+    |   CALL: {
+    |     fn: Api.fetch,
+    |     args: ['./products']
+    |   }
+    | }

@@ -1,0 +1,18 @@
+h3 A Saga is a Generator function
+
+ol
+  li.fragment
+    | Each step of the Saga is a
+    code  yield
+    |  within the Generator
+
+  li.fragment
+    | The Saga runs (and waits) for each
+    code  yield
+    |  in turn
+
+  li.fragment
+    | The framework runs Generators in a Promise-aware way
+
+  li.fragment
+    | Multiple instances of the same Saga can run concurrently

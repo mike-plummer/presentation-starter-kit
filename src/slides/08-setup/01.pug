@@ -2,8 +2,9 @@ pre
   code.lang-javascript
     | import { applyMiddleware, createStore } from 'redux';
     | import createSagaMiddleware from 'redux-saga';
-    | import sagas from './sagas'; // Reference to all of your Sagas
     | import rootReducer from './reducers';
+    .fragment
+      | import watchers from './watchers'; // Reference to your watchers
     |
     | export const buildStore = () => {
     .fragment
@@ -16,9 +17,9 @@ pre
       |   // Build your Redux store
       |   const store = createStore(rootReducer, enhancers);
     .fragment
-      |   // Kick off the Sagas - can be delayed if needed
+      |   // Kick off the watchers - can be delayed if needed
       |   // (wait until after app init, for example)
-      |   sagaMiddleware.run(sagas);
+      |   sagaMiddleware.run(watchers);
     .fragment
       |
       |   return store;

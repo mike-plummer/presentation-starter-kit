@@ -2,13 +2,11 @@ pre
   code.lang-javascript
     | function* watchers() {
     .fragment
-      |   // Every time a SAVE is seen begin
-      |   // an instance of 'save' Saga
+      |   // Start 'save' saga every time "SAVE" action occurs
       |   yield fork(takeEvery("SAVE", save));
       |
     .fragment
-      |   // Every time a REFRESH is seen begin
-      |   // an instance of the 'refresh' Saga
+      |   // Start 'refresh' saga every time "REFRESH" action occurs
       |   // Cancel any instances already running.
       |   yield fork(takeLatest("REFRESH", refresh));
     | }

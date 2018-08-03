@@ -26,9 +26,9 @@ pre
               |
               .fragment
                 |     // API call succeeded, dispatch SUCCESS action
-                |     yield put({ type: "SAVE_SUCCESS" });
+                |     yield put({ type: "SUCCESS" });
         |   } catch (error) {
         |     // Any errors fall into here, dispatch FAILURE action
-        |     yield put({ type: "SAVE_FAILURE" });
+        |     yield put({ type: "FAILURE" });
         |   }
       | }

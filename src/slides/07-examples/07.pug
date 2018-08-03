@@ -18,9 +18,8 @@ pre
       | }
     |
     .fragment
-      | function* logout() {
-      |   // Another Saga can also be directly
-      |   // invoked using 'yield*' (not recommended)
-      |   yield* confirm();
+      | function* delete() {
+      |   // Another Saga can also leverage it
+      |  yield call(confirm);
       | }
     |

@@ -23,3 +23,7 @@
 .reveal.component.red {
   color: #c82506;
 }
+
+table {
+  font-size: 0.75em !important;
+}
