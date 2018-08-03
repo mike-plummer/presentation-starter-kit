@@ -1,0 +1,20 @@
+pre
+  code.lang-javascript
+    | const watchers = [
+    .fragment
+      |   // Start 'save' saga every time "SAVE" action occurs
+      |   takeEvery("SAVE", save),
+      |
+    .fragment
+      |   // Start 'refresh' saga every time "REFRESH" action occurs
+      |   // Cancel any instances already running.
+      |   takeLatest("REFRESH", refresh)
+    | ];
+    |
+    | // Sagas
+    | function* save(saveAction) {
+    |   // Logic here
+    | }
+    | function* refresh(refreshAction) {
+    |   // Logic here
+    | }

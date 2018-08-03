@@ -1,18 +1,34 @@
-h2 Triggering
-
-
-p Multiple Sagas can be triggered from the same action
-p You can even a wildcard to match action types
+h2 Saga
 
 pre
   code.lang-javascript
-    | function* watchers() {
     .fragment
-      |   // Every time a SAVE is seen kick off instance of 'save' saga
-      |   yield fork(takeEvery("SAVE", save));
-      |
-      |
-    .fragment
-      |   // Every time any action is seen kick off the 'analytics' saga
-      |   yield fork(takeEvery("*", analytics));
-    | }
+      | function* save(saveAction) {
+      .fragment
+        |   try {
+        .fragment
+          |     // Dispatch action for user to CONFIRM save
+          |     yield put({ type: "CONFIRM" });
+          |
+          |
+          .fragment
+            |     // Wait for user to respond with CONFIRM or CANCEL
+            |     const choice = yield take(["CANCELLED", "CONFIRMED"]);
+            |     if (choice.type === "CANCELLED") {
+            |       return;
+            |     }
+            |
+            |
+            .fragment
+              |     // Kick off API call to save
+              |     yield call(Api.save, action.value);
+              |
+              |
+              .fragment
+                |     // API call succeeded, dispatch SUCCESS action
+                |     yield put({ type: "SUCCESS" });
+        |   } catch (error) {
+        |     // Any errors fall into here, dispatch FAILURE action
+        |     yield put({ type: "FAILURE" });
+        |   }
+      | }

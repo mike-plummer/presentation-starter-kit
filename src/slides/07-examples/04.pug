@@ -1,20 +1,18 @@
+h2 Triggering
+
+
+p Multiple Sagas can be triggered from the same action
+p You can even a wildcard to match action types
+
 pre
   code.lang-javascript
-    | function* watchers() {
+    | const watchers = [
     .fragment
-      |   // Start 'save' saga every time "SAVE" action occurs
-      |   yield fork(takeEvery("SAVE", save));
+      |   // Every time a SAVE is seen kick off instance of 'save' saga
+      |   takeEvery("SAVE", save),
+      |
       |
     .fragment
-      |   // Start 'refresh' saga every time "REFRESH" action occurs
-      |   // Cancel any instances already running.
-      |   yield fork(takeLatest("REFRESH", refresh));
-    | }
-    |
-    | // Sagas
-    | function* save(saveAction) {
-    |   // Logic here
-    | }
-    | function* refresh(refreshAction) {
-    |   // Logic here
-    | }
+      |   // Every time any action is seen kick off the 'analytics' saga
+      |   takeEvery("*", analytics)
+    | ];
