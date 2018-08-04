@@ -8,18 +8,20 @@ pre
   code.lang-javascript
     .fragment
       | function* confirm() {
-      |   // Basic confirmation flow //
+      |   yield put({ type: "CONFIRM" });
+      |   const choice = yield take(["CANCELLED", "CONFIRMED"]);
+      |   return choice.type === "CONFIRMED";
       | }
     |
     .fragment
-      | function* save() {
+      | function* saveData() {
       |   // Another Saga can be executed via 'call'
-      |   yield call(confirm);
+      |   const confirmed = yield call(confirm);
       | }
     |
     .fragment
-      | function* delete() {
+      | function* deleteData() {
       |   // Another Saga can also leverage it
-      |  yield call(confirm);
+      |   const confirmed = yield call(confirm);
       | }
     |

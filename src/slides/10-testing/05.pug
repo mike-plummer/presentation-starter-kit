@@ -11,10 +11,5 @@ pre
       |     .take(['CANCELLED', 'CONFIRMED'])
     .fragment
       |     // Mock one of the waited-for actions so Saga can continue
-      |     .dispatch({ type: 'CANCELLED' })
-    .fragment
-      |     .then(result => {
-      |       // Assert that the Saga didn't do anything else
-      |       expect(result.effects).toBeEmpty();
-      |     });
+      |     .dispatch({ type: 'CANCELLED' });
     | });

@@ -22,10 +22,5 @@ pre
       |    .call(Api.save, 'blorg')
     .fragment
       |    // Assert Saga dispatches SUCCESS action
-      |    .put({ type: 'SAVE_SUCCESS' })
-    .fragment
-      |    .then(result => {
-      |      // Assert that the Saga didn't do anything else
-      |      expect(result.effects).toBeEmpty();
-      |    });
+      |    .put({ type: 'SAVE_SUCCESS' });
   | });
