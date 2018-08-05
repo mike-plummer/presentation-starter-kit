@@ -3,10 +3,10 @@ pre
     |
     | test('save saga - confirmed & success', () => {
     .fragment
-      |  // Trigger Saga with mock action
+      |  // Trigger Saga with stub action
       |  return expectSaga(save, { value: 'blorg' })
     .fragment
-      |    // Mock call to Api.save with 'blorg' param, provide return val
+      |    // Mock execution of 'call' effect, provide return value
       |    .provide(call(Api.save, 'blorg'), { result: 'success!'})
     .fragment
       |    // Assert Saga dispatches CONFIRM action

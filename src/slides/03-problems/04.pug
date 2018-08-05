@@ -1,0 +1,44 @@
+h3 What about
+  code  redux-thunk
+  |?
+
+pre.fragment
+  code.lang-javascript
+    | function makeSandwichesForEverybody() {
+    |   return function (dispatch, getState) {
+    |     if (!getState().sandwiches.isShopOpen) {
+    |       return Promise.resolve();
+    |     }
+    |     return dispatch(
+    |       makeASandwichWithSecretSauce('My Grandma')
+    |     ).then(() =>
+    |       Promise.all([
+    |         dispatch(makeASandwichWithSecretSauce('Me')),
+    |         dispatch(makeASandwichWithSecretSauce('My wife'))
+    |       ])
+    |     ).then(() =>
+    |       dispatch(makeASandwichWithSecretSauce('Our kids'))
+    |     ).then(() =>
+    |       dispatch(getState().myMoney > 42 ?
+    |         withdrawMoney(42) :
+    |         apologize('Me', 'The Sandwich Shop')
+    |       )
+    |     );
+    |   };
+    | }
+
+video.fragment(
+  autoplay,
+  loop,
+  muted,
+  src="./images/confused.mp4",
+  style={
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    margin: 'auto',
+    width: '100%'
+  }
+)

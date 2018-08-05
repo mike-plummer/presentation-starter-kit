@@ -1,7 +1,7 @@
 pre
   code.lang-javascript
     | test('save saga - cancelled', () => {
-    |   // Trigger Saga with mock action
+    |   // Trigger Saga with stub action
     |   return expectSaga(save, { value: 'blorg' })
     .fragment
       |     // Assert Saga dispatches CONFIRM action
