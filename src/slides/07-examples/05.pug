@@ -11,22 +11,22 @@ pre
           |     yield put({ type: "CONFIRM" });
           |
           |
-          .fragment
-            |     // Wait for user to respond with CONFIRM or CANCEL
-            |     const choice = yield take(["CANCELLED", "CONFIRMED"]);
-            |     if (choice.type === "CANCELLED") {
-            |       return;
-            |     }
-            |
-            |
-            .fragment
-              |     // Kick off API call to save
-              |     yield call(Api.save, action.value);
-              |
-              |
-              .fragment
-                |     // API call succeeded, dispatch SUCCESS action
-                |     yield put({ type: "SUCCESS" });
+        .fragment
+          |     // Wait for user to respond with CONFIRM or CANCEL
+          |     const choice = yield take(["CANCELLED", "CONFIRMED"]);
+          |     if (choice.type === "CANCELLED") {
+          |       return;
+          |     }
+          |
+          |
+        .fragment
+          |     // Kick off API call to save
+          |     yield call(Api.save, action.value);
+          |
+          |
+        .fragment
+          |     // API call succeeded, dispatch SUCCESS action
+          |     yield put({ type: "SUCCESS" });
         |   } catch (error) {
         |     // Any errors fall into here, dispatch FAILURE action
         |     yield put({ type: "FAILURE" });
